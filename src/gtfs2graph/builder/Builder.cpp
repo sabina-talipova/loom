@@ -46,10 +46,14 @@ void Builder::consume(const Feed& f, BuildGraph* g) {
 
   for (auto t = f.getTrips().begin(); t != f.getTrips().end(); ++t) {
     i++;
+    // for (auto x : _cfg->useRoutes) {
+    //     std::cout << "HERE: " << x << " ";
+    //     std::cout << "t->second->getRoute()->getId(): " << t->second->getRoute()->getId() << " ";
+    // }
     // ignore trips with only one stop
     if (t->second->getStopTimes().size() < 2) continue;
     if (!_cfg->useMots.count(t->second->getRoute()->getType())) continue;
-    // if (!_cfg->useRoutes.count(t->second->getRoute()->getId())) continue;
+    if (_cfg->useRoutes.size() > 0 && !_cfg->useRoutes.count(t->second->getRoute()->getId())) continue;
 
     auto st = t->second->getStopTimes().begin();
 

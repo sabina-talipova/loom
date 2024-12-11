@@ -60,6 +60,8 @@ void ConfigReader::help(const char* bin) const {
       << "  as GTFS mot codes\n"
       << std::setw(36) << " "
       << "  funicular, coach} or as GTFS mot codes\n"
+      << std::setw(36) << "  -r [ --route ]"
+      << "Routes to calculate shapes for, comma separator.\n"
       << std::setw(36) << "  -p [ --prune-threshold ] arg (=0)"
       << "Threshold for pruning of seldomly occuring\n"
       << std::setw(36) << " " << "  lines, between 0 and 1\n";
@@ -79,7 +81,7 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
                          {0, 0, 0, 0}};
 
   int c;
-  while ((c = getopt_long(argc, argv, ":hvim:p:", ops, 0)) != -1) {
+  while ((c = getopt_long(argc, argv, ":hvim:r:p:", ops, 0)) != -1) {
     switch (c) {
       case 'h':
         help(argv[0]);
@@ -129,12 +131,6 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
 
   for (auto sRouteStr : util::split(routeIds, ',')) {
     if (sRouteStr == "-1") continue;
-    cfg->useRoutes.insert(std::stod(sRouteStr));
-    std::cout << "Elements in the set: ";
-    for (double x : cfg->useRoutes) {
-        std::cout << x << " ";
-    }
-
-    std::cout << std::endl;
+    cfg->useRoutes.insert(sRouteStr);
   }
 }
