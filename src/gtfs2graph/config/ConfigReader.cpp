@@ -68,7 +68,7 @@ void ConfigReader::help(const char* bin) const {
 // _____________________________________________________________________________
 void ConfigReader::read(Config* cfg, int argc, char** argv) const {
   std::string motStr = "all";
-  double routeId = -1;
+  std::string routeIds = "-1";
   double pruneThreshold = 0;
 
   struct option ops[] = {{"version", no_argument, 0, 'v'},
@@ -91,7 +91,7 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
         motStr = optarg;
         break;
       case 'r':
-        routeStr = atof(optarg);
+        routeIds = optarg;
         break;
       case 'p':
         pruneThreshold = atof(optarg);
@@ -127,9 +127,9 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
     }
   }
 
-  for (auto sRouteStr : util::split(motStr, ',')) {
-    if (sRouteStr == -1) continue;
-    cfg->useRoutes.insert(mot);
+  for (auto sRouteStr : util::split(routeIds, ',')) {
+    if (sRouteStr == "-1") continue;
+    cfg->useRoutes.insert(std::stod(sRouteStr));
     std::cout << "Elements in the set: ";
     for (double x : cfg->useRoutes) {
         std::cout << x << " ";
