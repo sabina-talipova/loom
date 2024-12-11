@@ -36,6 +36,9 @@ ENV GRB_LICENSE_FILE /gurobi/gurobi.lic
 
 RUN cd /loom && rm -rf build && mkdir build && cd build && cmake .. && make -j20 install
 
+ADD ./examples  /var/www/examples
+
 WORKDIR /
 
-CMD loom
+
+# CMD loom
