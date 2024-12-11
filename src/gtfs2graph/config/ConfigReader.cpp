@@ -68,11 +68,13 @@ void ConfigReader::help(const char* bin) const {
 // _____________________________________________________________________________
 void ConfigReader::read(Config* cfg, int argc, char** argv) const {
   std::string motStr = "all";
+  double routeId = -1;
   double pruneThreshold = 0;
 
   struct option ops[] = {{"version", no_argument, 0, 'v'},
                          {"help", no_argument, 0, 'h'},
                          {"mots", required_argument, 0, 'm'},
+                         {"route", required_argument, 0, 'r'},
                          {"prune-threshold", required_argument, 0, 'p'},
                          {0, 0, 0, 0}};
 
@@ -87,6 +89,9 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
         exit(0);
       case 'm':
         motStr = optarg;
+        break;
+      case 'r':
+        routeStr = atof(optarg);
         break;
       case 'p':
         pruneThreshold = atof(optarg);
@@ -120,5 +125,16 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
          ad::cppgtfs::gtfs::flat::Route::getTypesFromString(sMotStr)) {
       cfg->useMots.insert(mot);
     }
+  }
+
+  for (auto sRouteStr : util::split(motStr, ',')) {
+    if (sRouteStr == -1) continue;
+    cfg->useRoutes.insert(mot);
+    std::cout << "Elements in the set: ";
+    for (double x : cfg->useRoutes) {
+        std::cout << x << " ";
+    }
+
+    std::cout << std::endl;
   }
 }
