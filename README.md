@@ -143,7 +143,8 @@ For example, to octilinearize the Freiburg example, use
 cat examples/freiburg.json | sudo docker run -i loom octi
 ```
 
-> [!NOTE] If you want to use gurobi for ILP optimization, you *must* mount a folder container a valid gurobi license file `gurobi.lic` to `/gurobi/` in the container. For example, if your `gurobi.lic` is in `/home/user/gurobi`:
+> [!NOTE]
+> If you want to use gurobi for ILP optimization, you *must* mount a folder container a valid gurobi license file `gurobi.lic` to `/gurobi/` in the container. For example, if your `gurobi.lic` is in `/home/user/gurobi`:
 
 ```bash
 docker run -v /home/user/gurobi:/gurobi loom <TOOL>
